@@ -35,28 +35,51 @@
             </pragma>
         </directive>
         <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="intra" value="" positionalBoolean="type"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
             <pragma name="ARRAY_PARTITION">
                 <option name="variable" value="partials_0" positionalBoolean="4"/>
                 <option name="complete" value="" positionalBoolean="type"/>
                 <option name="dim" value="1"/>
             </pragma>
         </directive>
-        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+        <directive functionName="depthwise_conv" label="" functionLabel="">
             <pragma name="ARRAY_PARTITION">
                 <option name="variable" value="partials_1" positionalBoolean="4"/>
                 <option name="complete" value="" positionalBoolean="type"/>
                 <option name="dim" value="1"/>
             </pragma>
         </directive>
-        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+        <directive functionName="depthwise_conv" label="" functionLabel="">
             <pragma name="ARRAY_PARTITION">
                 <option name="variable" value="out_0" positionalBoolean="4"/>
                 <option name="complete" value="" positionalBoolean="type"/>
                 <option name="dim" value="1"/>
             </pragma>
         </directive>
-        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
-            <pragma name="PIPELINE"/>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="results_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="inter" value="" positionalBoolean="type"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
         </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>

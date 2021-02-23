@@ -30,10 +30,10 @@ DEPTH_OUTER_LOOP:
 	KERNEL_V_LOOP:
 		for (short k = 0; k < KERNEL_HEIGHT; k++)
 		{
-			int stripe_part = 0;
-			int output_stripe_part = 0;
+			int stripe_part = dout_base;
+			int output_stripe_part = dout_base;
 
-			// Êä³öxÎ»ÖÃ±ÈÊäÈëÖÍºóÒ»¸öÎ»ÖÃ¡£
+			// è¾“å‡ºxä½ç½®æ¯”è¾“å…¥æ»žåŽä¸€ä¸ªä½ç½®ã€‚
 			if (k == 0)
 			{
 				output_stripe_part += input_width - 1;
@@ -54,8 +54,9 @@ DEPTH_OUTER_LOOP:
 			{
 
 			WIDTH_LOOP:
-				for (short w = 0; w < input_width + KERNEL_WIDTH / 2; w += 1)
+				for (short w = -KERNEL_WIDTH / 2; w < input_width + KERNEL_WIDTH / 2; w += 1)
 				{
+					char input_invalid = w == -1 || w == input_width;
 
 				DEPTH_LOOP:
 					for (short d = 0; d < 8; d++)
@@ -71,28 +72,24 @@ DEPTH_OUTER_LOOP:
 						x_end = w == input_width - 1;
 						y_end = h == input_height - 1;
 
-						input_index = dout_base + stripe_part;
+						input_index = stripe_part;
 
-						output_index = dout_base + output_stripe_part; // @lx Êä³öÎ»ÖÃ£¬º¬stride¡£
+						output_index = output_stripe_part; // @lx è¾“å‡ºä½ç½®ï¼Œå«strideã€‚
 
-						// Í¬ÑùÒª¶Á²¿·ÖºÍ¡£
+						// åŒæ ·è¦è¯»éƒ¨åˆ†å’Œã€‚
 						w00 = weights[weight_index][d];
 						w01 = weights[weight_index + 1][d];
 						w02 = weights[weight_index + 2][d];
 
-						if (k == 1 && w == 110)
+						if (w == -1 && h == 111 && k == 2)
 						{
 							printf("debug this");
 						}
 
-						char out_valid = !x_start && !(y_start && k == 2) && !(y_end && k == 0);
+						char out_valid = !(w == 0 || w == -1) && !(y_start && k == 2) && !(y_end && k == 0);
 						char y_valid = !(y_start && k == 2) && !(y_end && k == 0);
-						if (x_start)
-						{
-							partials_0[d] = 0;
-						}
 
-						if (w == input_width)
+						if (input_invalid)
 						{
 							i_0 = 0;
 						}
@@ -102,40 +99,48 @@ DEPTH_OUTER_LOOP:
 						}
 						if (y_valid && k != 0 && w != input_width)
 						{
-							results_0[d] = output[output_index + 1][d];
+							if (w == -1)
+							{
+								results_0[d] = output[output_index + 1][d];
+							}
+							else
+							{
+								results_0[d] = output[output_index + 2][d];
+							}
 						}
 						else
 						{
 							results_0[d] = 0;
 						}
 
-						// partials_1[d]´æ´¢×Å×î½Ó½ü½á¹ûµÄ²¿·ÖºÍ£¬ÔÚÐÐÎ²Ê±£¬partials_1[d]¼´½á¹û¡£
+						// partials_1[d]å­˜å‚¨ç€æœ€æŽ¥è¿‘ç»“æžœçš„éƒ¨åˆ†å’Œï¼Œåœ¨è¡Œå°¾æ—¶ï¼Œpartials_1[d]å³ç»“æžœã€‚
 						if (stride == 1)
 						{
-							// Ë³ÐòºÜÖØÒª£¡£¡
+							// é¡ºåºå¾ˆé‡è¦ï¼ï¼
 							out_0[d] = i_0 * w02 + partials_1[d];
-							partials_1[d] = partials_0[d] + i_0 * w01 + results_0[d];
-							partials_0[d] = i_0 * w00;
+
+							partials_1[d] = partials_0[d] + i_0 * w01;
+
+							partials_0[d] = i_0 * w00 + results_0[d];
 						}
 						else if (stride == 2)
 						{
 							if (w % 2 == 0)
 							{
-								partials_1[d] = partials_0[d] + i_0 * w01 + results_0[d];
+								partials_1[d] = partials_0[d] + i_0 * w01;
 							}
 							else
 							{
 								out_0[d] = i_0 * w02 + partials_1[d];
-								partials_0[d] = i_0 * w00;
+								partials_0[d] = i_0 * w00 + results_0[d];
 							}
 						}
-
 						if (out_valid)
 						{
 							output[output_index][d] = out_0[d];
 						}
 					}
-					if (w != input_width)
+					if (!input_invalid)
 					{
 						stripe_part += 1;
 						output_stripe_part += 1;

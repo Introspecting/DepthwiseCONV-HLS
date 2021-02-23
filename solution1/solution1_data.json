@@ -19,10 +19,13 @@
       "set_directive_array_partition depthwise_conv ",
       "set_directive_pipeline depthwise_conv\/WIDTH_LOOP ",
       "set_directive_array_partition depthwise_conv ",
-      "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
-      "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
-      "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
-      "set_directive_pipeline depthwise_conv\/HEIGHT_LOOP "
+      "set_directive_pipeline depthwise_conv\/HEIGHT_LOOP ",
+      "set_directive_dependence depthwise_conv ",
+      "set_directive_array_partition depthwise_conv ",
+      "set_directive_array_partition depthwise_conv ",
+      "set_directive_array_partition depthwise_conv ",
+      "set_directive_array_partition depthwise_conv ",
+      "set_directive_dependence depthwise_conv "
     ],
     "DirectiveInfo": [
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
@@ -30,10 +33,13 @@
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredoutput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
       "pipeline depthwise_conv\/WIDTH_LOOP {} {}",
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {complete positionBoolean0type} {dim 2}} {}",
-      "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_0} {complete positionBoolean0type} {dim 1}} {}",
-      "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_1} {complete positionBoolean0type} {dim 1}} {}",
-      "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
-      "pipeline depthwise_conv\/HEIGHT_LOOP {} {}"
+      "pipeline depthwise_conv\/HEIGHT_LOOP {} {}",
+      "dependence depthwise_conv {{variable output} {array positionBoolean0class} {intra positionBoolean0type} {false positionBoolean0dependent}} {}",
+      "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_1} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredresults_0} {complete positionBoolean0type} {dim 1}} {}",
+      "dependence depthwise_conv {{variable output} {array positionBoolean0class} {inter positionBoolean0type} {false positionBoolean0dependent}} {}"
     ]
   },
   "Args": {
@@ -137,14 +143,12 @@
       "impl\/vhdl\/depthwise_conv_madEe.vhd",
       "impl\/vhdl\/depthwise_conv_mubkb.vhd",
       "impl\/vhdl\/depthwise_conv_mucud.vhd",
-      "impl\/vhdl\/depthwise_conv_mueOg.vhd",
       "impl\/vhdl\/depthwise_conv.vhd"
     ],
     "Verilog": [
       "impl\/verilog\/depthwise_conv_madEe.v",
       "impl\/verilog\/depthwise_conv_mubkb.v",
       "impl\/verilog\/depthwise_conv_mucud.v",
-      "impl\/verilog\/depthwise_conv_mueOg.v",
       "impl\/verilog\/depthwise_conv.v"
     ],
     "Misc": ["impl\/misc\/logo.png"],
@@ -413,7 +417,18 @@
       "bundle_name": "output_0",
       "bundle_role": "address0"
     },
-    "output_0_d0": {
+    "output_0_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_0",
+      "bundle_role": "address1"
+    },
+    "output_0_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -422,7 +437,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_0",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_0_q0": {
       "type": "data",
@@ -446,7 +461,18 @@
       "bundle_name": "output_1",
       "bundle_role": "address0"
     },
-    "output_1_d0": {
+    "output_1_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_1",
+      "bundle_role": "address1"
+    },
+    "output_1_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -455,7 +481,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_1",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_1_q0": {
       "type": "data",
@@ -479,7 +505,18 @@
       "bundle_name": "output_2",
       "bundle_role": "address0"
     },
-    "output_2_d0": {
+    "output_2_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_2",
+      "bundle_role": "address1"
+    },
+    "output_2_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -488,7 +525,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_2",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_2_q0": {
       "type": "data",
@@ -512,7 +549,18 @@
       "bundle_name": "output_3",
       "bundle_role": "address0"
     },
-    "output_3_d0": {
+    "output_3_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_3",
+      "bundle_role": "address1"
+    },
+    "output_3_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -521,7 +569,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_3",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_3_q0": {
       "type": "data",
@@ -545,7 +593,18 @@
       "bundle_name": "output_4",
       "bundle_role": "address0"
     },
-    "output_4_d0": {
+    "output_4_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_4",
+      "bundle_role": "address1"
+    },
+    "output_4_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -554,7 +613,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_4",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_4_q0": {
       "type": "data",
@@ -578,7 +637,18 @@
       "bundle_name": "output_5",
       "bundle_role": "address0"
     },
-    "output_5_d0": {
+    "output_5_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_5",
+      "bundle_role": "address1"
+    },
+    "output_5_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -587,7 +657,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_5",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_5_q0": {
       "type": "data",
@@ -611,7 +681,18 @@
       "bundle_name": "output_6",
       "bundle_role": "address0"
     },
-    "output_6_d0": {
+    "output_6_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_6",
+      "bundle_role": "address1"
+    },
+    "output_6_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -620,7 +701,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_6",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_6_q0": {
       "type": "data",
@@ -644,7 +725,18 @@
       "bundle_name": "output_7",
       "bundle_role": "address0"
     },
-    "output_7_d0": {
+    "output_7_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "16"
+        }},
+      "bundle_name": "output_7",
+      "bundle_role": "address1"
+    },
+    "output_7_d1": {
       "type": "data",
       "dir": "out",
       "width": "16",
@@ -653,7 +745,7 @@
           "Width": "16"
         }},
       "bundle_name": "output_7",
-      "bundle_role": "d0"
+      "bundle_role": "d1"
     },
     "output_7_q0": {
       "type": "data",
@@ -1643,16 +1735,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_0_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_0_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_0_d0": {
+    "output_0_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_0_q0": {
-      "dir": "in",
+    "output_0_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_0_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_0_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_1_address0": {
@@ -1663,16 +1763,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_1_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_1_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_1_d0": {
+    "output_1_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_1_q0": {
-      "dir": "in",
+    "output_1_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_1_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_1_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_2_address0": {
@@ -1683,16 +1791,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_2_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_2_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_2_d0": {
+    "output_2_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_2_q0": {
-      "dir": "in",
+    "output_2_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_2_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_2_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_3_address0": {
@@ -1703,16 +1819,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_3_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_3_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_3_d0": {
+    "output_3_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_3_q0": {
-      "dir": "in",
+    "output_3_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_3_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_3_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_4_address0": {
@@ -1723,16 +1847,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_4_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_4_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_4_d0": {
+    "output_4_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_4_q0": {
-      "dir": "in",
+    "output_4_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_4_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_4_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_5_address0": {
@@ -1743,16 +1875,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_5_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_5_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_5_d0": {
+    "output_5_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_5_q0": {
-      "dir": "in",
+    "output_5_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_5_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_5_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_6_address0": {
@@ -1763,16 +1903,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_6_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_6_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_6_d0": {
+    "output_6_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_6_q0": {
-      "dir": "in",
+    "output_6_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_6_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_6_d1": {
+      "dir": "out",
       "width": "16"
     },
     "output_7_address0": {
@@ -1783,16 +1931,24 @@
       "dir": "out",
       "width": "1"
     },
-    "output_7_we0": {
-      "dir": "out",
-      "width": "1"
+    "output_7_q0": {
+      "dir": "in",
+      "width": "16"
     },
-    "output_7_d0": {
+    "output_7_address1": {
       "dir": "out",
       "width": "16"
     },
-    "output_7_q0": {
-      "dir": "in",
+    "output_7_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_7_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_7_d1": {
+      "dir": "out",
       "width": "16"
     }
   },
@@ -1817,7 +1973,7 @@
         "Timing": {
           "Target": "5.00",
           "Uncertainty": "0.63",
-          "Estimate": "4.364"
+          "Estimate": "4.441"
         },
         "Loops": [
           {
@@ -1857,17 +2013,17 @@
                     "Name": "WIDTH_LOOP",
                     "TripCount": "",
                     "Latency": "",
-                    "PipelineII": "3",
-                    "PipelineDepth": "5"
+                    "PipelineII": "1",
+                    "PipelineDepth": "4"
                   }]
               }]
           }
         ],
         "Area": {
+          "BRAM_18K": "2",
           "DSP48E": "33",
-          "FF": "2893",
-          "LUT": "3973",
-          "BRAM_18K": "0",
+          "FF": "3013",
+          "LUT": "3972",
           "URAM": "0"
         }
       }}
@@ -1882,7 +2038,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2021-02-23 12:56:52 +0800",
+    "Time": "2021-02-23 16:25:14 +0800",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1"
   }
