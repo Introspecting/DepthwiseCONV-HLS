@@ -1,0 +1,65 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+    <sourceFile name="">
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="input" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="8"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="3"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="output" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="8"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="DEPTH_LOOP" functionLabel="">
+            <pragma name="PIPELINE">
+                <option name="II" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="WIDTH_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="depthwise_conv" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="partials_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="partials_1" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="out_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+    </sourceFile>
+</AutoPilot:ProjectResources>
+
