@@ -23,7 +23,7 @@ int depthwise_conv(short input_width, short input_height, short input_depth, sho
 	int dout_base;
 
 DEPTH_OUTER_LOOP:
-	for (short dout = 0; dout < (input_depth / 8); dout += 1)
+	for (short dout = 0; dout < (input_depth >> 3); dout += 1)
 	{
 		dout_base = dout * input_width * input_height;
 
@@ -31,24 +31,24 @@ DEPTH_OUTER_LOOP:
 		for (short k = 0; k < KERNEL_HEIGHT; k++)
 		{
 			int stripe_part = dout_base;
-			int output_stripe_part = dout_base;
+
+			int output_partial_part = dout_base;
 
 			// 输出x位置比输入滞后一个位置。
 			if (k == 0)
 			{
-				output_stripe_part += input_width - 1;
+				output_partial_part += output_width;
 			}
 			else if (k == 1)
 			{
-				output_stripe_part += -1;
+				output_partial_part += 0;
 			}
 			else if (k == 2)
 			{
-				output_stripe_part += -input_width - 1;
+				output_partial_part += -output_width;
 			}
-
 			weight_index = dout * KERNEL_WIDTH * KERNEL_HEIGHT + k * KERNEL_WIDTH;
-
+			int output_stripe_part = output_partial_part;
 		HEIGHT_LOOP:
 			for (short h = 0; h < input_height; h++)
 			{
@@ -57,20 +57,15 @@ DEPTH_OUTER_LOOP:
 				for (short w = -KERNEL_WIDTH / 2; w < input_width + KERNEL_WIDTH / 2; w += 1)
 				{
 					char input_invalid = w == -1 || w == input_width;
+					char y_invalid = (h == 0 && k == 2) || (h == input_height - 1 && k == 0);
+					char output_invalid = (w == 0 || w == -1) || y_invalid;
+					char partial_invalid = (w >= input_width - 1) || y_invalid;
 
 				DEPTH_LOOP:
 					for (short d = 0; d < 8; d++)
 					{
 						elem_t i_0;
 						elem_t w00, w01, w02;
-
-						char x_start, y_start, x_end, y_end;
-						char block_start, channel_start;
-
-						x_start = w == 0;
-						y_start = h == 0;
-						x_end = w == input_width - 1;
-						y_end = h == input_height - 1;
 
 						input_index = stripe_part;
 
@@ -81,13 +76,10 @@ DEPTH_OUTER_LOOP:
 						w01 = weights[weight_index + 1][d];
 						w02 = weights[weight_index + 2][d];
 
-						if (w == -1 && h == 111 && k == 2)
+						if (w == -1 && h == 1 && k == 1)
 						{
 							printf("debug this");
 						}
-
-						char out_valid = !(w == 0 || w == -1) && !(y_start && k == 2) && !(y_end && k == 0);
-						char y_valid = !(y_start && k == 2) && !(y_end && k == 0);
 
 						if (input_invalid)
 						{
@@ -97,20 +89,14 @@ DEPTH_OUTER_LOOP:
 						{
 							i_0 = input[input_index][d];
 						}
-						if (y_valid && k != 0 && w != input_width)
+
+						if (partial_invalid || k == 0)
 						{
-							if (w == -1)
-							{
-								results_0[d] = output[output_index + 1][d];
-							}
-							else
-							{
-								results_0[d] = output[output_index + 2][d];
-							}
+							results_0[d] = 0;
 						}
 						else
 						{
-							results_0[d] = 0;
+							results_0[d] = output[output_partial_part][d];
 						}
 
 						// partials_1[d]存储着最接近结果的部分和，在行尾时，partials_1[d]即结果。
@@ -135,15 +121,24 @@ DEPTH_OUTER_LOOP:
 								partials_0[d] = i_0 * w00 + results_0[d];
 							}
 						}
-						if (out_valid)
+						if (!output_invalid)
 						{
 							output[output_index][d] = out_0[d];
 						}
 					}
 					if (!input_invalid)
 					{
-						stripe_part += 1;
-						output_stripe_part += 1;
+						stripe_part++;
+					}
+
+					if (!(w >= input_width - 1))
+					{
+						output_partial_part++;
+					}
+
+					if (!(w == 0 || w == -1))
+					{
+						output_stripe_part++;
 					}
 				}
 			}
