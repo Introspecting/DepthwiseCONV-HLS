@@ -17,23 +17,23 @@
       "set_directive_array_partition depthwise_conv ",
       "set_directive_array_partition depthwise_conv ",
       "set_directive_array_partition depthwise_conv ",
-      "set_directive_pipeline depthwise_conv\/DEPTH_LOOP -II 1",
       "set_directive_pipeline depthwise_conv\/WIDTH_LOOP ",
       "set_directive_array_partition depthwise_conv ",
       "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
       "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
-      "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP "
+      "set_directive_array_partition depthwise_conv\/HEIGHT_LOOP ",
+      "set_directive_pipeline depthwise_conv\/HEIGHT_LOOP "
     ],
     "DirectiveInfo": [
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {cyclic positionBoolean0type} {factor 3} {dim 1}} {}",
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredoutput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
-      "pipeline depthwise_conv\/DEPTH_LOOP {{II 1}} {}",
       "pipeline depthwise_conv\/WIDTH_LOOP {} {}",
       "array_partition depthwise_conv {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {complete positionBoolean0type} {dim 2}} {}",
       "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_0} {complete positionBoolean0type} {dim 1}} {}",
       "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_1} {complete positionBoolean0type} {dim 1}} {}",
-      "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}"
+      "array_partition depthwise_conv\/HEIGHT_LOOP {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
+      "pipeline depthwise_conv\/HEIGHT_LOOP {} {}"
     ]
   },
   "Args": {
@@ -1865,8 +1865,8 @@
         ],
         "Area": {
           "DSP48E": "33",
-          "FF": "2877",
-          "LUT": "4075",
+          "FF": "2893",
+          "LUT": "3973",
           "BRAM_18K": "0",
           "URAM": "0"
         }
@@ -1882,7 +1882,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2021-02-23 11:47:24 +0800",
+    "Time": "2021-02-23 12:56:52 +0800",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1"
   }

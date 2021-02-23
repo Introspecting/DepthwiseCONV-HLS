@@ -9,6 +9,10 @@ int depthwise_conv(short input_width, short input_height, short input_depth, sho
 	short output_height = input_height / stride;
 	short output_depth = input_depth;
 
+	int input_index = 0;
+	int weight_index = 0;
+	int output_index = 0;
+
 	acc_t partials_0[8] = {0};
 	acc_t partials_1[8] = {0};
 	acc_t out_0[8] = {0};
@@ -36,12 +40,14 @@ DEPTH_OUTER_LOOP:
 			}
 			else if (k == 1)
 			{
-				output_stripe_part -= 1;
+				output_stripe_part += -1;
 			}
 			else if (k == 2)
 			{
 				output_stripe_part += -input_width - 1;
 			}
+
+			weight_index = dout * KERNEL_WIDTH * KERNEL_HEIGHT + k * KERNEL_WIDTH;
 
 		HEIGHT_LOOP:
 			for (short h = 0; h < input_height; h++)
@@ -50,9 +56,6 @@ DEPTH_OUTER_LOOP:
 			WIDTH_LOOP:
 				for (short w = 0; w < input_width + KERNEL_WIDTH / 2; w += 1)
 				{
-					int input_index = 0;
-					int weight_index = 0;
-					int output_index = 0;
 
 				DEPTH_LOOP:
 					for (short d = 0; d < 8; d++)
@@ -61,20 +64,16 @@ DEPTH_OUTER_LOOP:
 						elem_t w00, w01, w02;
 
 						char x_start, y_start, x_end, y_end;
-						char stripe_start, block_start, channel_start;
+						char block_start, channel_start;
 
 						x_start = w == 0;
 						y_start = h == 0;
 						x_end = w == input_width - 1;
 						y_end = h == input_height - 1;
-						stripe_start = x_start && y_start;
-						block_start = stripe_start && k == 0;
 
 						input_index = dout_base + stripe_part;
 
 						output_index = dout_base + output_stripe_part; // @lx 输出位置，含stride。
-
-						weight_index = dout * KERNEL_WIDTH * KERNEL_HEIGHT + k * KERNEL_WIDTH;
 
 						// 同样要读部分和。
 						w00 = weights[weight_index][d];
@@ -91,14 +90,6 @@ DEPTH_OUTER_LOOP:
 						if (x_start)
 						{
 							partials_0[d] = 0;
-							partials_1[d] = 0;
-							out_0[d] = 0;
-							results_0[d] = 0;
-						}
-
-						if (block_start)
-						{
-							// 读取部分和。
 						}
 
 						if (w == input_width)
@@ -125,7 +116,6 @@ DEPTH_OUTER_LOOP:
 							out_0[d] = i_0 * w02 + partials_1[d];
 							partials_1[d] = partials_0[d] + i_0 * w01 + results_0[d];
 							partials_0[d] = i_0 * w00;
-
 						}
 						else if (stride == 2)
 						{
@@ -144,12 +134,12 @@ DEPTH_OUTER_LOOP:
 						{
 							output[output_index][d] = out_0[d];
 						}
-						
 					}
 					if (w != input_width)
-						{
-							stripe_part += 1, output_stripe_part += 1;
-						}
+					{
+						stripe_part += 1;
+						output_stripe_part += 1;
+					}
 				}
 			}
 		}

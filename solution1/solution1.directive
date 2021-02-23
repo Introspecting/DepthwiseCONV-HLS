@@ -24,11 +24,6 @@
                 <option name="dim" value="2"/>
             </pragma>
         </directive>
-        <directive functionName="depthwise_conv" label="DEPTH_LOOP" functionLabel="">
-            <pragma name="PIPELINE">
-                <option name="II" value="1"/>
-            </pragma>
-        </directive>
         <directive functionName="depthwise_conv" label="WIDTH_LOOP" functionLabel="">
             <pragma name="PIPELINE"/>
         </directive>
@@ -59,6 +54,9 @@
                 <option name="complete" value="" positionalBoolean="type"/>
                 <option name="dim" value="1"/>
             </pragma>
+        </directive>
+        <directive functionName="depthwise_conv" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
         </directive>
     </sourceFile>
 </AutoPilot:ProjectResources>
