@@ -37,11 +37,6 @@
 			<location>D:/Projects/DepthwiseCONV-HLS/.apc/.tb</location>
 		</link>
 		<link>
-			<name>.reference/assert.h</name>
-			<type>1</type>
-			<location>C:/Xilinx/Vivado/2019.1/msys64/mingw64/x86_64-w64-mingw32/include/assert.h</location>
-		</link>
-		<link>
 			<name>solution1/constraints</name>
 			<type>2</type>
 			<location>D:/Projects/DepthwiseCONV-HLS/solution1/.tcls</location>
