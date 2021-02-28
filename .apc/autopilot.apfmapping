@@ -2,6 +2,7 @@
 <autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
   <source>
     <originFiles name="depthwise.c" path="D:\Projects\DepthwiseCONV-HLS\depthwise.c"/>
+    <originFiles name="test_unroll.c" path="D:\Projects\DepthwiseCONV-HLS\test_unroll.c"/>
   </source>
   <testbench>
     <originFiles name="depthwise_test.c" path="D:\Projects\DepthwiseCONV-HLS\depthwise_test.c"/>

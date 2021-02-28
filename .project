@@ -47,6 +47,11 @@
 			<location>D:/Projects/DepthwiseCONV-HLS/depthwise.c</location>
 		</link>
 		<link>
+			<name>source/test_unroll.c</name>
+			<type>1</type>
+			<location>D:/Projects/DepthwiseCONV-HLS/test_unroll.c</location>
+		</link>
+		<link>
 			<name>testbench/depthwise_test.c</name>
 			<type>1</type>
 			<location>D:/Projects/DepthwiseCONV-HLS/depthwise_test.c</location>
