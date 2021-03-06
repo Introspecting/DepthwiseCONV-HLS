@@ -37,9 +37,14 @@
 			<location>D:/Projects/DepthwiseCONV-HLS/.apc/.tb</location>
 		</link>
 		<link>
-			<name>solution1/constraints</name>
+			<name>base/constraints</name>
 			<type>2</type>
-			<location>D:/Projects/DepthwiseCONV-HLS/solution1/.tcls</location>
+			<location>D:/Projects/DepthwiseCONV-HLS/base/.tcls</location>
+		</link>
+		<link>
+			<name>optimized/constraints</name>
+			<type>2</type>
+			<location>D:/Projects/DepthwiseCONV-HLS/optimized/.tcls</location>
 		</link>
 		<link>
 			<name>source/depthwise.c</name>
@@ -57,19 +62,34 @@
 			<location>D:/Projects/DepthwiseCONV-HLS/depthwise_test.c</location>
 		</link>
 		<link>
-			<name>solution1/constraints/.xml.directive</name>
+			<name>base/constraints/.xml.directive</name>
 			<type>1</type>
-			<location>D:/Projects/DepthwiseCONV-HLS/solution1/solution1.directive</location>
+			<location>D:/Projects/DepthwiseCONV-HLS/base/base.directive</location>
 		</link>
 		<link>
-			<name>solution1/constraints/directives.tcl</name>
+			<name>base/constraints/directives.tcl</name>
 			<type>1</type>
-			<location>D:/Projects/DepthwiseCONV-HLS/solution1/directives.tcl</location>
+			<location>D:/Projects/DepthwiseCONV-HLS/base/directives.tcl</location>
 		</link>
 		<link>
-			<name>solution1/constraints/script.tcl</name>
+			<name>base/constraints/script.tcl</name>
 			<type>1</type>
-			<location>D:/Projects/DepthwiseCONV-HLS/solution1/script.tcl</location>
+			<location>D:/Projects/DepthwiseCONV-HLS/base/script.tcl</location>
+		</link>
+		<link>
+			<name>optimized/constraints/.xml.directive</name>
+			<type>1</type>
+			<location>D:/Projects/DepthwiseCONV-HLS/optimized/optimized.directive</location>
+		</link>
+		<link>
+			<name>optimized/constraints/directives.tcl</name>
+			<type>1</type>
+			<location>D:/Projects/DepthwiseCONV-HLS/optimized/directives.tcl</location>
+		</link>
+		<link>
+			<name>optimized/constraints/script.tcl</name>
+			<type>1</type>
+			<location>D:/Projects/DepthwiseCONV-HLS/optimized/script.tcl</location>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -16,7 +16,11 @@ int depthwise_conv_per(short input_width, short input_height, short stride, elem
 	acc_t out_0[CHANNEL_PARALLELISM] = {0};
 	elem_t results_0[CHANNEL_PARALLELISM] = {0};
 
-	assert(stride == 1 || stride == 2);
+	assert(stride == 1);
+
+	assert(input_width == 112);
+	assert(input_height == 112);
+
 
 KERNEL_V_LOOP:
 	for (short k = 0; k < KERNEL_HEIGHT; k++)
@@ -184,13 +188,11 @@ int pointwise_conv_per(short input_width, short input_height, short kernel_size,
 
 	assert(stride >= 1 && stride < 3);
 
-	assert(kernel_size >= 1 && kernel_size < 4);
+	assert(kernel_size == 1);
 
 	int y_start = 0;
-
 	int x_start = 0;
 
-	short half_kernel_size = kernel_size / 2;
 	int weight_index = 0;
 
 KERNEL_V_LOOP:
@@ -218,7 +220,6 @@ KERNEL_V_LOOP:
 		Y_LOOP:
 			for (y = 0; y < INPUT_WIDTH_LIMIT; y++)
 			{
-
 			X_LOOP:
 				for (x = 0; x < INPUT_WIDTH_LIMIT; x++)
 				{
@@ -226,22 +227,15 @@ KERNEL_V_LOOP:
 					char y_start_temp, x_start_temp;
 
 					char y_invalid;
-					if (x == 0 && y == 0)
+					if (x == 0 && y == 0) // 用不同的卷积核部分对X、Y方向计算内积。
 					{
-						x_start_temp = h - half_kernel_size;
-						y_start_temp = v - half_kernel_size;
+						x_start_temp = 0;
+						y_start_temp = 0;
 
-						if (x_start_temp < 0)
-						{
-							x_start = stride + x_start_temp;
-						}
-						if (y_start_temp < 0)
-						{
-							y_start = stride + y_start_temp;
-						}
+						x_start = x_start_temp < 0 ? stride + x_start_temp : x_start_temp;
 
-						assert(y_start >= 0 && y_start < 3);
-						assert(x_start >= 0 && x_start < 3);
+						y_start = y_start_temp < 0 ? stride + y_start_temp : y_start_temp;
+
 					}
 					else
 					{
@@ -250,11 +244,11 @@ KERNEL_V_LOOP:
 					// x为循环变量，x_loc为特征图横坐标。y同。
 					x_loc = x + x_start;
 					y_loc = y + y_start;
-					y_invalid = (y_loc == 0 && v == 2) || (y_loc == input_height - 1 && v == 0 && kernel_size == 3);
+					y_invalid = 0;
 
 					if (x == 0 && y == 0)
 					{
-						output_index = (y_start_temp < 0 ? output_width : 0) + (x_start_temp < 0 ? 1 : 0);
+						output_index = 0;
 					}
 					else
 					{
@@ -264,7 +258,7 @@ KERNEL_V_LOOP:
 						}
 					}
 
-					char input_invalid = (x_loc == 0 && h == 2) || (x_loc == input_width - 1 && h == 0 && kernel_size == 3);
+					char input_invalid = 0;
 					// y方向的边界通过根据不同的k指定不同的y_start解决，也可以用y_invalid，表达式：h < stride + v - 1
 
 					// TODO @lx 适应不同的stride。
@@ -393,8 +387,14 @@ void depthwise_top(elem_t input[N], elem_t output[M], elem_t weights_0[W], elem_
 	short input_width = 112, input_height = 112, input_depth = 8;
 	short output_width = 112, output_height = 112, output_depth = 8;
 	int input_length = input_width * input_height * input_depth;
+	int input_length_single = input_width * input_height * CHANNEL_PARALLELISM;
+
 	int output_length = output_width * output_height * output_depth;
-	int weights_length = 1 * 1 * 8 * 8;
+	int output_length_single = output_width * output_height * KERNEL_PARALLELISM;
+
+	int layerwise_weights_length = 3 * 3 * CHANNEL_PARALLELISM;
+
+	int pointwise_weights_length = 1 * 1 * CHANNEL_PARALLELISM * KERNEL_PARALLELISM;
 
 	elem_t input_buf[INPUT_STRIP_COUNT_LIMIT][CHANNEL_PARALLELISM];
 
@@ -402,21 +402,25 @@ void depthwise_top(elem_t input[N], elem_t output[M], elem_t weights_0[W], elem_
 
 	elem_t intermediate_buf[OUTPUT_STRIP_COUNT_LIMIT][KERNEL_PARALLELISM];
 
-	elem_t weights_buf[1 * 1 * 8 * 1][CHANNEL_PARALLELISM];
+	elem_t weights_0_buf[3 * 3][CHANNEL_PARALLELISM];
 
-	read_data(input, input_buf, input_length);
+	elem_t weights_buf[1 * 1 * KERNEL_PARALLELISM * 1][CHANNEL_PARALLELISM];
 
-	read_data(weights_0, weights_buf, weights_length);
+//	depthwise_top_label0:for (short i = 0; i < input_depth / CHANNEL_PARALLELISM; i++)
+//	{
+		read_data(input, input_buf, input_length_single);
+		read_data(weights_0, weights_0_buf, layerwise_weights_length);
+		read_data(weights_1, weights_buf, pointwise_weights_length);
 
-	depthwise_conv(input_width, input_height, input_depth, 2, input_buf,
-				   weights_buf,
-				   intermediate_buf);
+		depthwise_conv(input_width, input_height, input_depth, 1, input_buf,
+				weights_0_buf,
+						   intermediate_buf);
 
-	read_data(weights_1, weights_buf, weights_length);
 
-	pointwise_conv(input_width, input_height, input_depth, output_depth, 3, 1, intermediate_buf,
-				   weights_buf,
-				   output_buf);
+			pointwise_conv(input_width, input_height, input_depth, output_depth, 1, 1, intermediate_buf,
+						   weights_buf,
+						   output_buf);
+//	}
 
 	write_data(output_buf, output, output_length / KERNEL_PARALLELISM);
 }

@@ -280,9 +280,9 @@ int main(void)
 
     mismatch_count += test_112_112_32_stride_2(112, 112, 32, 1);
 
-    mismatch_count += test_112_112_32_stride_2(112, 112, 32, 2);
+//    mismatch_count += test_112_112_32_stride_2(112, 112, 32, 2);
 
-    mismatch_count += test_pointwise_conv(112, 112, 32, 32, 3, 1);
+//    mismatch_count += test_pointwise_conv(112, 112, 32, 32, 3, 1);
 
     mismatch_count += test_pointwise_conv(112, 112, 32, 32, 1, 1);
 

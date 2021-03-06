@@ -1,0 +1,1252 @@
+{
+  "Top": "depthwise_top",
+  "RtlTop": "depthwise_top",
+  "RtlPrefix": "",
+  "SourceLanguage": "c",
+  "ResetStyle": "control",
+  "GenerateBdFiles": "0",
+  "HostMachineBits": "64",
+  "Target": {
+    "Family": "zynquplus",
+    "Device": "xczu3eg",
+    "Package": "-sfvc784",
+    "Speed": "-1-i"
+  },
+  "HlsSolution": {
+    "Config": [
+      "config_compile -name_max_length=20",
+      "config_compile -no_signed_zeros=0",
+      "config_compile -pipeline_loops=0",
+      "config_compile -unsafe_math_optimizations=0",
+      "config_sdx -target=none",
+      "config_export -format=ip_catalog",
+      "config_export -rtl=verilog",
+      "config_export -vivado_optimization_level=2",
+      "config_export -vivado_phys_opt=place",
+      "config_export -vivado_report_level=0"
+    ],
+    "DirectiveTcl": [
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_pipeline depthwise_conv_per\/WIDTH_LOOP ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_dependence depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_array_partition depthwise_conv_per ",
+      "set_directive_dependence depthwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_pipeline pointwise_conv_per\/HEIGHT_LOOP -II 1",
+      "set_directive_array_partition pointwise_conv_per ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_pipeline test_loop\/XLOOP ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_pipeline test_loop\/LOAD_WEIGHT_VALUES_LOOP ",
+      "set_directive_array_partition test_loop ",
+      "set_directive_loop_flatten test_loop\/LOAD_WEIGHT_VALUES_LOOP ",
+      "set_directive_pipeline pointwise_conv_per\/X_LOOP ",
+      "set_directive_dependence test_loop ",
+      "set_directive_dependence pointwise_conv_per ",
+      "set_directive_pipeline pointwise_conv_per\/LOAD_WEIGHT_VALUES_LOOP ",
+      "set_directive_loop_tripcount depthwise_conv_per\/WIDTH_LOOP -min 112 -max 112",
+      "set_directive_loop_tripcount depthwise_conv_per\/HEIGHT_LOOP -min 112 -max 112",
+      "set_directive_loop_tripcount depthwise_conv_per\/KERNEL_V_LOOP -min 112 -max 112",
+      "set_directive_dataflow depthwise_top ",
+      "set_directive_dataflow depthwise_top\/depthwise_top_label0 ",
+      "set_directive_allocation read_data 2 -type function",
+      "set_directive_dataflow read_data "
+    ],
+    "DirectiveInfo": [
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {cyclic positionBoolean0type} {factor 3} {dim 1}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredoutput} {cyclic positionBoolean0type} {factor 8} {dim 2}} {}",
+      "pipeline depthwise_conv_per\/WIDTH_LOOP {} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {complete positionBoolean0type} {dim 2}} {}",
+      "dependence depthwise_conv_per {{variable output} {array positionBoolean0class} {intra positionBoolean0type} {false positionBoolean0dependent}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredpartials_1} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition depthwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredresults_0} {complete positionBoolean0type} {dim 1}} {}",
+      "dependence depthwise_conv_per {{variable output} {array positionBoolean0class} {inter positionBoolean0type} {false positionBoolean0dependent}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinput} {complete positionBoolean0type} {dim 2}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {complete positionBoolean0type} {dim 2}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredoutput} {complete positionBoolean0type} {dim 2}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredresults_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinputs_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweight_values} {complete positionBoolean0type} {dim 2}} {}",
+      "pipeline pointwise_conv_per\/HEIGHT_LOOP {{II 1}} {}",
+      "array_partition pointwise_conv_per {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweight_values} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredout_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredresults_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinputs_0} {complete positionBoolean0type} {dim 1}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweight_values} {complete positionBoolean0type} {dim 1}} {}",
+      "pipeline test_loop\/XLOOP {} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredinput} {complete positionBoolean0type} {dim 2}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweights} {complete positionBoolean0type} {dim 2}} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredoutput} {complete positionBoolean0type} {dim 2}} {}",
+      "pipeline test_loop\/LOAD_WEIGHT_VALUES_LOOP {} {}",
+      "array_partition test_loop {{partition positionBooleanCmd} {variable positionBooleanTextRequiredweight_values} {complete positionBoolean0type} {dim 2}} {}",
+      "loop_flatten test_loop\/LOAD_WEIGHT_VALUES_LOOP {{flatten positionBooleanCmd}} {}",
+      "pipeline pointwise_conv_per\/X_LOOP {} {}",
+      "dependence test_loop {{variable output} {array positionBoolean0class} {inter positionBoolean0type} {false positionBoolean0dependent}} {}",
+      "dependence pointwise_conv_per {{variable output} {array positionBoolean0class} {inter positionBoolean0type} {RAW positionBoolean0direction} {false positionBoolean0dependent}} {}",
+      "pipeline pointwise_conv_per\/LOAD_WEIGHT_VALUES_LOOP {} {}",
+      "loop_tripcount depthwise_conv_per\/WIDTH_LOOP {{tripcount positionBooleanCmd} {min 112} {max 112}} {}",
+      "loop_tripcount depthwise_conv_per\/HEIGHT_LOOP {{tripcount positionBooleanCmd} {min 112} {max 112}} {}",
+      "loop_tripcount depthwise_conv_per\/KERNEL_V_LOOP {{tripcount positionBooleanCmd} {min 112} {max 112}} {}",
+      "dataflow depthwise_top {} {}",
+      "dataflow depthwise_top\/depthwise_top_label0 {} {}",
+      "allocation read_data {{instances positionBooleanTextRequired2} {function positionBoolean0type}} {}",
+      "dataflow read_data {} {}"
+    ]
+  },
+  "Args": {
+    "input": {
+      "index": "0",
+      "type": {
+        "kinds": ["array"],
+        "dataType": "short",
+        "dataWidth": "16",
+        "arraySizes": ["100352"],
+        "multiInterfaceRef": [
+          "input_r_address0",
+          "input_r_address1",
+          "input_r_d0",
+          "input_r_d1",
+          "input_r_q0",
+          "input_r_q1"
+        ]
+      }
+    },
+    "output": {
+      "index": "1",
+      "type": {
+        "kinds": ["array"],
+        "dataType": "short",
+        "dataWidth": "16",
+        "arraySizes": ["100352"],
+        "multiInterfaceRef": [
+          "output_r_address0",
+          "output_r_address1",
+          "output_r_d0",
+          "output_r_d1",
+          "output_r_q0",
+          "output_r_q1"
+        ]
+      }
+    },
+    "weights_0": {
+      "index": "2",
+      "type": {
+        "kinds": ["array"],
+        "dataType": "short",
+        "dataWidth": "16",
+        "arraySizes": ["576"],
+        "multiInterfaceRef": [
+          "weights_0_address0",
+          "weights_0_address1",
+          "weights_0_d0",
+          "weights_0_d1",
+          "weights_0_q0",
+          "weights_0_q1"
+        ]
+      }
+    },
+    "weights_1": {
+      "index": "3",
+      "type": {
+        "kinds": ["array"],
+        "dataType": "short",
+        "dataWidth": "16",
+        "arraySizes": ["576"],
+        "multiInterfaceRef": [
+          "weights_1_address0",
+          "weights_1_address1",
+          "weights_1_d0",
+          "weights_1_d1",
+          "weights_1_q0",
+          "weights_1_q1"
+        ]
+      }
+    }
+  },
+  "Return": {
+    
+  },
+  "ClockInfo": {
+    "ClockName": "ap_clk",
+    "ClockPeriod": "4",
+    "IsCombLogic": "0",
+    "II": "x",
+    "Latency": "138696",
+    "Uncertainty": "0.5"
+  },
+  "Xdc": {"OocClocks": ["create_clock -name ap_clk -period 4.000 [get_ports ap_clk]"]},
+  "Ipx": {
+    "Vendor": "xilinx.com",
+    "Library": "hls",
+    "Name": "depthwise_top",
+    "Version": "1.0",
+    "DisplayName": "Depthwise_top",
+    "Revision": "",
+    "Description": "An IP generated by Vivado HLS",
+    "Taxonomy": "\/VIVADO_HLS_IP",
+    "AutoFamilySupport": ""
+  },
+  "Files": {
+    "CSource": [
+      "..\/depthwise.c",
+      "..\/test_unroll.c"
+    ],
+    "Vhdl": [
+      "impl\/vhdl\/depthwise_conv.vhd",
+      "impl\/vhdl\/depthwise_conv_per.vhd",
+      "impl\/vhdl\/depthwise_top_inpg8j.vhd",
+      "impl\/vhdl\/depthwise_top_inpg8j_memcore.vhd",
+      "impl\/vhdl\/depthwise_top_macdEe.vhd",
+      "impl\/vhdl\/depthwise_top_macfYi.vhd",
+      "impl\/vhdl\/depthwise_top_muleOg.vhd",
+      "impl\/vhdl\/depthwise_top_muxcud.vhd",
+      "impl\/vhdl\/depthwise_top_outocq.vhd",
+      "impl\/vhdl\/depthwise_top_outocq_memcore.vhd",
+      "impl\/vhdl\/depthwise_top_urebkb.vhd",
+      "impl\/vhdl\/depthwise_top_wei2iS.vhd",
+      "impl\/vhdl\/depthwise_top_wei2iS_memcore.vhd",
+      "impl\/vhdl\/depthwise_top_weiEe0.vhd",
+      "impl\/vhdl\/depthwise_top_weiEe0_memcore.vhd",
+      "impl\/vhdl\/pointwise_conv.vhd",
+      "impl\/vhdl\/pointwise_conv_per.vhd",
+      "impl\/vhdl\/read_data34.vhd",
+      "impl\/vhdl\/read_data34_Loop_RD_s.vhd",
+      "impl\/vhdl\/read_data_133.vhd",
+      "impl\/vhdl\/read_data_133_Loop_R.vhd",
+      "impl\/vhdl\/read_data_232.vhd",
+      "impl\/vhdl\/read_data_232_Loop_R.vhd",
+      "impl\/vhdl\/write_data.vhd",
+      "impl\/vhdl\/depthwise_top.vhd"
+    ],
+    "Verilog": [
+      "impl\/verilog\/depthwise_conv.v",
+      "impl\/verilog\/depthwise_conv_per.v",
+      "impl\/verilog\/depthwise_top_inpg8j.v",
+      "impl\/verilog\/depthwise_top_inpg8j_memcore.v",
+      "impl\/verilog\/depthwise_top_macdEe.v",
+      "impl\/verilog\/depthwise_top_macfYi.v",
+      "impl\/verilog\/depthwise_top_muleOg.v",
+      "impl\/verilog\/depthwise_top_muxcud.v",
+      "impl\/verilog\/depthwise_top_outocq.v",
+      "impl\/verilog\/depthwise_top_outocq_memcore.v",
+      "impl\/verilog\/depthwise_top_urebkb.v",
+      "impl\/verilog\/depthwise_top_wei2iS.v",
+      "impl\/verilog\/depthwise_top_wei2iS_memcore.v",
+      "impl\/verilog\/depthwise_top_weiEe0.v",
+      "impl\/verilog\/depthwise_top_weiEe0_memcore.v",
+      "impl\/verilog\/pointwise_conv.v",
+      "impl\/verilog\/pointwise_conv_per.v",
+      "impl\/verilog\/read_data34.v",
+      "impl\/verilog\/read_data34_Loop_RD_s.v",
+      "impl\/verilog\/read_data_133.v",
+      "impl\/verilog\/read_data_133_Loop_R.v",
+      "impl\/verilog\/read_data_232.v",
+      "impl\/verilog\/read_data_232_Loop_R.v",
+      "impl\/verilog\/write_data.v",
+      "impl\/verilog\/depthwise_top.v"
+    ],
+    "Misc": ["impl\/misc\/logo.png"],
+    "DesignXml": "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.autopilot\/db\/depthwise_top.design.xml",
+    "DebugDir": "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug",
+    "ProtoInst": [
+      "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug\/depthwise_conv.protoinst",
+      "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug\/depthwise_conv_per.protoinst",
+      "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug\/depthwise_top.protoinst",
+      "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug\/pointwise_conv_per.protoinst",
+      "D:\/Projects\/DepthwiseCONV-HLS\/optimized\/.debug\/test_loop.protoinst"
+    ]
+  },
+  "SubcoreInfo": {
+    "HasXpmMemory": false,
+    "HasClockedDsp": false,
+    "IP": []
+  },
+  "Interfaces": {
+    "ap_clk": {
+      "type": "clock",
+      "ctype": {"CLK": {"Type": "bool"}},
+      "bundle_name": "ap_clk",
+      "bundle_role": "default",
+      "reset": "ap_rst"
+    },
+    "ap_ctrl": {
+      "type": "ap_ctrl",
+      "ctrl_ports": "ap_start ap_done ap_ready ap_idle",
+      "ctype": {
+        "start": {"Type": "bool"},
+        "done": {"Type": "bool"},
+        "ready": {"Type": "bool"},
+        "idle": {"Type": "bool"}
+      }
+    },
+    "ap_rst": {
+      "type": "reset",
+      "polarity": "ACTIVE_HIGH",
+      "ctype": {"RST": {"Type": "bool"}},
+      "bundle_name": "ap_rst",
+      "bundle_role": "default"
+    },
+    "input_r_address0": {
+      "type": "data",
+      "dir": "out",
+      "width": "17",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "17"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "address0"
+    },
+    "input_r_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "17",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "17"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "address1"
+    },
+    "input_r_d0": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "d0"
+    },
+    "input_r_d1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "d1"
+    },
+    "input_r_q0": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "q0"
+    },
+    "input_r_q1": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "input_r",
+      "bundle_role": "q1"
+    },
+    "output_r_address0": {
+      "type": "data",
+      "dir": "out",
+      "width": "17",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "17"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "address0"
+    },
+    "output_r_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "17",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "17"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "address1"
+    },
+    "output_r_d0": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "d0"
+    },
+    "output_r_d1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "d1"
+    },
+    "output_r_q0": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "q0"
+    },
+    "output_r_q1": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "output_r",
+      "bundle_role": "q1"
+    },
+    "weights_0_address0": {
+      "type": "data",
+      "dir": "out",
+      "width": "10",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "10"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "address0"
+    },
+    "weights_0_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "10",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "10"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "address1"
+    },
+    "weights_0_d0": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "d0"
+    },
+    "weights_0_d1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "d1"
+    },
+    "weights_0_q0": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "q0"
+    },
+    "weights_0_q1": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_0",
+      "bundle_role": "q1"
+    },
+    "weights_1_address0": {
+      "type": "data",
+      "dir": "out",
+      "width": "10",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "10"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "address0"
+    },
+    "weights_1_address1": {
+      "type": "data",
+      "dir": "out",
+      "width": "10",
+      "ctype": {"DATA": {
+          "Type": "null",
+          "Width": "10"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "address1"
+    },
+    "weights_1_d0": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "d0"
+    },
+    "weights_1_d1": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "d1"
+    },
+    "weights_1_q0": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "q0"
+    },
+    "weights_1_q1": {
+      "type": "data",
+      "dir": "in",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "16"
+        }},
+      "bundle_name": "weights_1",
+      "bundle_role": "q1"
+    }
+  },
+  "RtlPorts": {
+    "ap_clk": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_rst": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_start": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_done": {
+      "dir": "out",
+      "width": "1"
+    },
+    "ap_ready": {
+      "dir": "out",
+      "width": "1"
+    },
+    "ap_idle": {
+      "dir": "out",
+      "width": "1"
+    },
+    "input_r_address0": {
+      "dir": "out",
+      "width": "17"
+    },
+    "input_r_ce0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "input_r_d0": {
+      "dir": "out",
+      "width": "16"
+    },
+    "input_r_q0": {
+      "dir": "in",
+      "width": "16"
+    },
+    "input_r_we0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "input_r_address1": {
+      "dir": "out",
+      "width": "17"
+    },
+    "input_r_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "input_r_d1": {
+      "dir": "out",
+      "width": "16"
+    },
+    "input_r_q1": {
+      "dir": "in",
+      "width": "16"
+    },
+    "input_r_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_r_address0": {
+      "dir": "out",
+      "width": "17"
+    },
+    "output_r_ce0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_r_d0": {
+      "dir": "out",
+      "width": "16"
+    },
+    "output_r_q0": {
+      "dir": "in",
+      "width": "16"
+    },
+    "output_r_we0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_r_address1": {
+      "dir": "out",
+      "width": "17"
+    },
+    "output_r_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "output_r_d1": {
+      "dir": "out",
+      "width": "16"
+    },
+    "output_r_q1": {
+      "dir": "in",
+      "width": "16"
+    },
+    "output_r_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_0_address0": {
+      "dir": "out",
+      "width": "10"
+    },
+    "weights_0_ce0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_0_d0": {
+      "dir": "out",
+      "width": "16"
+    },
+    "weights_0_q0": {
+      "dir": "in",
+      "width": "16"
+    },
+    "weights_0_we0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_0_address1": {
+      "dir": "out",
+      "width": "10"
+    },
+    "weights_0_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_0_d1": {
+      "dir": "out",
+      "width": "16"
+    },
+    "weights_0_q1": {
+      "dir": "in",
+      "width": "16"
+    },
+    "weights_0_we1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_1_address0": {
+      "dir": "out",
+      "width": "10"
+    },
+    "weights_1_ce0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_1_d0": {
+      "dir": "out",
+      "width": "16"
+    },
+    "weights_1_q0": {
+      "dir": "in",
+      "width": "16"
+    },
+    "weights_1_we0": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_1_address1": {
+      "dir": "out",
+      "width": "10"
+    },
+    "weights_1_ce1": {
+      "dir": "out",
+      "width": "1"
+    },
+    "weights_1_d1": {
+      "dir": "out",
+      "width": "16"
+    },
+    "weights_1_q1": {
+      "dir": "in",
+      "width": "16"
+    },
+    "weights_1_we1": {
+      "dir": "out",
+      "width": "1"
+    }
+  },
+  "ModuleInfo": {
+    "Hierarchy": {
+      "ModuleName": "depthwise_top",
+      "Instances": [
+        {
+          "ModuleName": "pointwise_conv",
+          "InstanceName": "pointwise_conv_U0",
+          "Instances": [{
+              "ModuleName": "pointwise_conv_per",
+              "InstanceName": "grp_pointwise_conv_per_fu_50"
+            }]
+        },
+        {
+          "ModuleName": "depthwise_conv",
+          "InstanceName": "depthwise_conv_U0",
+          "Instances": [{
+              "ModuleName": "depthwise_conv_per",
+              "InstanceName": "grp_depthwise_conv_per_fu_82"
+            }]
+        },
+        {
+          "ModuleName": "write_data",
+          "InstanceName": "write_data_U0"
+        },
+        {
+          "ModuleName": "read_data_133",
+          "InstanceName": "read_data_133_U0",
+          "Instances": [{
+              "ModuleName": "read_data_133_Loop_R",
+              "InstanceName": "read_data_133_Loop_R_U0"
+            }]
+        },
+        {
+          "ModuleName": "read_data_232",
+          "InstanceName": "read_data_232_U0",
+          "Instances": [{
+              "ModuleName": "read_data_232_Loop_R",
+              "InstanceName": "read_data_232_Loop_R_U0"
+            }]
+        },
+        {
+          "ModuleName": "read_data34",
+          "InstanceName": "read_data34_U0",
+          "Instances": [{
+              "ModuleName": "read_data34_Loop_RD_s",
+              "InstanceName": "read_data34_Loop_RD_U0"
+            }]
+        }
+      ]
+    },
+    "Info": {
+      "read_data_232_Loop_R": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "read_data_232": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "1",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "read_data_133_Loop_R": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "read_data_133": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "1",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "read_data34_Loop_RD_s": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "read_data34": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "1",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "depthwise_conv_per": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "depthwise_conv": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "pointwise_conv_per": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "pointwise_conv": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "write_data": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      },
+      "depthwise_top": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "1",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      }
+    },
+    "Metrics": {
+      "read_data_232_Loop_R": {
+        "Latency": {
+          "LatencyBest": "100355",
+          "LatencyAvg": "100355",
+          "LatencyWorst": "100355",
+          "PipelineII": "100355",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.704"
+        },
+        "Loops": [{
+            "Name": "RD_Loop_Row_RD_Loop_Col",
+            "TripCount": "100352",
+            "Latency": "100353",
+            "PipelineII": "1",
+            "PipelineDepth": "3"
+          }],
+        "Area": {
+          "FF": "81",
+          "LUT": "220",
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "URAM": "0"
+        }
+      },
+      "read_data_232": {
+        "Latency": {
+          "LatencyBest": "100355",
+          "LatencyAvg": "100355",
+          "LatencyWorst": "100355",
+          "PipelineII": "100356",
+          "PipelineDepth": "",
+          "PipelineType": "dataflow"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.704"
+        },
+        "Area": {
+          "FF": "81",
+          "LUT": "220",
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "URAM": "0"
+        }
+      },
+      "read_data_133_Loop_R": {
+        "Latency": {
+          "LatencyBest": "80",
+          "LatencyAvg": "80",
+          "LatencyWorst": "80",
+          "PipelineII": "80",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.249"
+        },
+        "Loops": [{
+            "Name": "RD_Loop_Row_RD_Loop_Col",
+            "TripCount": "72",
+            "Latency": "78",
+            "PipelineII": "1",
+            "PipelineDepth": "8"
+          }],
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "FF": "367",
+          "LUT": "350",
+          "URAM": "0"
+        }
+      },
+      "read_data_133": {
+        "Latency": {
+          "LatencyBest": "80",
+          "LatencyAvg": "80",
+          "LatencyWorst": "80",
+          "PipelineII": "81",
+          "PipelineDepth": "",
+          "PipelineType": "dataflow"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.249"
+        },
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "FF": "367",
+          "LUT": "350",
+          "URAM": "0"
+        }
+      },
+      "read_data34_Loop_RD_s": {
+        "Latency": {
+          "LatencyBest": "67",
+          "LatencyAvg": "67",
+          "LatencyWorst": "67",
+          "PipelineII": "67",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.221"
+        },
+        "Loops": [{
+            "Name": "RD_Loop_Row_RD_Loop_Col",
+            "TripCount": "64",
+            "Latency": "65",
+            "PipelineII": "1",
+            "PipelineDepth": "3"
+          }],
+        "Area": {
+          "FF": "43",
+          "LUT": "174",
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "URAM": "0"
+        }
+      },
+      "read_data34": {
+        "Latency": {
+          "LatencyBest": "67",
+          "LatencyAvg": "67",
+          "LatencyWorst": "67",
+          "PipelineII": "68",
+          "PipelineDepth": "",
+          "PipelineType": "dataflow"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "2.221"
+        },
+        "Area": {
+          "FF": "43",
+          "LUT": "174",
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "URAM": "0"
+        }
+      },
+      "depthwise_conv_per": {
+        "Latency": {
+          "LatencyBest": "38339",
+          "LatencyAvg": "38339",
+          "LatencyWorst": "38339",
+          "PipelineII": "38339",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.601"
+        },
+        "Loops": [
+          {
+            "Name": "memset_partials_0",
+            "TripCount": "8",
+            "Latency": "7",
+            "PipelineII": "",
+            "PipelineDepth": "1"
+          },
+          {
+            "Name": "memset_partials_1",
+            "TripCount": "8",
+            "Latency": "7",
+            "PipelineII": "",
+            "PipelineDepth": "1"
+          },
+          {
+            "Name": "KERNEL_V_LOOP",
+            "TripCount": "3",
+            "Latency": "38322",
+            "PipelineII": "",
+            "PipelineDepth": "12774",
+            "Loops": [{
+                "Name": "HEIGHT_LOOP_WIDTH_LOOP",
+                "TripCount": "12768",
+                "Latency": "12770",
+                "PipelineII": "1",
+                "PipelineDepth": "4"
+              }]
+          }
+        ],
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "24",
+          "FF": "1731",
+          "LUT": "1898",
+          "URAM": "0"
+        }
+      },
+      "depthwise_conv": {
+        "Latency": {
+          "LatencyBest": "38340",
+          "LatencyAvg": "38340",
+          "LatencyWorst": "38340",
+          "PipelineII": "38340",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.601"
+        },
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "24",
+          "FF": "1735",
+          "LUT": "1924",
+          "URAM": "0"
+        }
+      },
+      "pointwise_conv_per": {
+        "Latency": {
+          "LatencyBest": "12560",
+          "LatencyAvg": "12560",
+          "LatencyWorst": "12560",
+          "PipelineII": "12560",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.197"
+        },
+        "Loops": [
+          {
+            "Name": "LOAD_WEIGHT_VALUES_LOOP",
+            "TripCount": "8",
+            "Latency": "8",
+            "PipelineII": "1",
+            "PipelineDepth": "2"
+          },
+          {
+            "Name": "Y_LOOP_X_LOOP",
+            "TripCount": "12544",
+            "Latency": "12548",
+            "PipelineII": "1",
+            "PipelineDepth": "6"
+          }
+        ],
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "64",
+          "FF": "3183",
+          "LUT": "1164",
+          "URAM": "0"
+        }
+      },
+      "pointwise_conv": {
+        "Latency": {
+          "LatencyBest": "12561",
+          "LatencyAvg": "12561",
+          "LatencyWorst": "12561",
+          "PipelineII": "12561",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.197"
+        },
+        "Area": {
+          "BRAM_18K": "0",
+          "DSP48E": "64",
+          "FF": "3187",
+          "LUT": "1190",
+          "URAM": "0"
+        }
+      },
+      "write_data": {
+        "Latency": {
+          "LatencyBest": "12546",
+          "LatencyAvg": "12546",
+          "LatencyWorst": "12546",
+          "PipelineII": "12546",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.244"
+        },
+        "Loops": [{
+            "Name": "WR_Loop_Row_WR_Loop_Col",
+            "TripCount": "12544",
+            "Latency": "12544",
+            "PipelineII": "1",
+            "PipelineDepth": "2"
+          }],
+        "Area": {
+          "FF": "54",
+          "LUT": "231",
+          "BRAM_18K": "0",
+          "DSP48E": "0",
+          "URAM": "0"
+        }
+      },
+      "depthwise_top": {
+        "Latency": {
+          "LatencyBest": "138696",
+          "LatencyAvg": "138696",
+          "LatencyWorst": "138696",
+          "PipelineII": "100356",
+          "PipelineDepth": "",
+          "PipelineType": "dataflow"
+        },
+        "Timing": {
+          "Target": "4.00",
+          "Uncertainty": "0.50",
+          "Estimate": "3.601"
+        },
+        "Area": {
+          "BRAM_18K": "336",
+          "DSP48E": "88",
+          "FF": "6556",
+          "LUT": "4970",
+          "URAM": "0"
+        }
+      }
+    }
+  },
+  "Sdx": {
+    "Target": "none",
+    "ProfileOption": "0",
+    "ProfileType": "none",
+    "XO": "",
+    "KernelName": "depthwise_top",
+    "EnableXoSwEmu": "1"
+  },
+  "GenData": {
+    "DataVersion": "0.2",
+    "Time": "2021-03-06 23:56:35 +0800",
+    "ToolName": "vivado_hls",
+    "ToolVersion": "2019.1"
+  }
+}

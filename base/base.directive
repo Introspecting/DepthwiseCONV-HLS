@@ -1,0 +1,17 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+    <sourceFile name="">
+        <directive functionName="depthwise_conv_per" label="WIDTH_LOOP" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="112"/>
+                <option name="max" value="112"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="112"/>
+                <option name="max" value="112"/>
+            </pragma>
+        </directive>
+    </sourceFile>
+</AutoPilot:ProjectResources>
+

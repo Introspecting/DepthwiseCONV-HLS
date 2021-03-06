@@ -1,0 +1,265 @@
+<AutoPilot:ProjectResources xmlns:AutoPilot="com.autoesl.autopilot.ui.directiveView">
+    <sourceFile name="">
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="input" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="8"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="3"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="output" positionalBoolean="4"/>
+                <option name="cyclic" value="" positionalBoolean="type"/>
+                <option name="factor" value="8"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="WIDTH_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="intra" value="" positionalBoolean="type"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="partials_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="partials_1" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="out_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="results_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="inter" value="" positionalBoolean="type"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="input" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="output" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="out_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="results_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="inputs_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weight_values" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="PIPELINE">
+                <option name="II" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weight_values" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="out_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="results_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="inputs_0" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weight_values" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="1"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="XLOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="input" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weights" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="output" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="LOAD_WEIGHT_VALUES_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="ARRAY_PARTITION">
+                <option name="variable" value="weight_values" positionalBoolean="4"/>
+                <option name="complete" value="" positionalBoolean="type"/>
+                <option name="dim" value="2"/>
+            </pragma>
+        </directive>
+        <directive functionName="test_loop" label="LOAD_WEIGHT_VALUES_LOOP" functionLabel="">
+            <pragma name="LOOP_FLATTEN"/>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="X_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="test_loop" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="inter" value="" positionalBoolean="type"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="" functionLabel="">
+            <pragma name="DEPENDENCE">
+                <option name="variable" value="output"/>
+                <option name="array" value="" positionalBoolean="class"/>
+                <option name="inter" value="" positionalBoolean="type"/>
+                <option name="RAW" value="" positionalBoolean="direction"/>
+                <option name="false" value="" positionalBoolean="dependent"/>
+            </pragma>
+        </directive>
+        <directive functionName="pointwise_conv_per" label="LOAD_WEIGHT_VALUES_LOOP" functionLabel="">
+            <pragma name="PIPELINE"/>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="WIDTH_LOOP" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="112"/>
+                <option name="max" value="112"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="HEIGHT_LOOP" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="112"/>
+                <option name="max" value="112"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_conv_per" label="KERNEL_V_LOOP" functionLabel="">
+            <pragma name="LOOP_TRIPCOUNT">
+                <option name="min" value="112"/>
+                <option name="max" value="112"/>
+            </pragma>
+        </directive>
+        <directive functionName="depthwise_top" label="" functionLabel="">
+            <pragma name="DATAFLOW"/>
+        </directive>
+        <directive functionName="depthwise_top" label="depthwise_top_label0" functionLabel="">
+            <pragma name="DATAFLOW"/>
+        </directive>
+        <directive functionName="read_data" label="" functionLabel="">
+            <pragma name="ALLOCATION">
+                <option name="instances" value="2" positionalBoolean="4"/>
+                <option name="function" value="" positionalBoolean="type"/>
+            </pragma>
+        </directive>
+        <directive functionName="read_data" label="" functionLabel="">
+            <pragma name="DATAFLOW"/>
+        </directive>
+    </sourceFile>
+</AutoPilot:ProjectResources>
+
